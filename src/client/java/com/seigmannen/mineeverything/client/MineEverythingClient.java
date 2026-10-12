@@ -1,8 +1,8 @@
-package com.seigmannen.bedrockminer.client;
+package com.seigmannen.mineeverything.client;
 
 import net.fabricmc.api.ClientModInitializer;
 
-public class BedrockMinerClient implements ClientModInitializer {
+public class MineEverythingClient implements ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
 		// This entrypoint is suitable for setting up client-specific logic, such as rendering.

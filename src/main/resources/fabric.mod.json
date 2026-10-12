@@ -1,9 +1,9 @@
 {
 	"schemaVersion": 1,
-	"id": "bedrock-miner",
+	"id": "mineeverything",
 	"version": "${version}",
-	"name": "Bedrock Miner",
-	"description": "Lets a netherite pickaxe mine bedrock, including the bottom layer of the Overworld. Takes 2 minutes, sped up by Efficiency and Haste, and the bedrock drops as a block.",
+	"name": "Mine (Almost) Everything",
+	"description": "Lets a netherite pickaxe mine blocks that are normally unbreakable, like bedrock (including the bottom layer of the Overworld) and reinforced deepslate. Takes 2 minutes, sped up by Efficiency and Haste, and the block drops as itself.",
 	"authors": [
 		"seigmannen"
 	],
@@ -12,20 +12,20 @@
 		"sources": "https://github.com/Seigmannen/bedrock-miner"
 	},
 	"license": "MIT",
-	"icon": "assets/bedrock-miner/icon.png",
+	"icon": "assets/mineeverything/icon.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"com.seigmannen.bedrockminer.BedrockMiner"
+			"com.seigmannen.mineeverything.MineEverything"
 		],
 		"client": [
-			"com.seigmannen.bedrockminer.client.BedrockMinerClient"
+			"com.seigmannen.mineeverything.client.MineEverythingClient"
 		]
 	},
 	"mixins": [
-		"bedrock-miner.mixins.json",
+		"mineeverything.mixins.json",
 		{
-			"config": "bedrock-miner.client.mixins.json",
+			"config": "mineeverything.client.mixins.json",
 			"environment": "client"
 		}
 	],

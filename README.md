@@ -1,17 +1,33 @@
-# Bedrock Miner
+# Mine (Almost) Everything
 
-A Fabric mod for Minecraft 26.3 that lets you mine bedrock with a netherite pickaxe.
+A Fabric mod for Minecraft 26.3 that lets you mine normally unbreakable blocks with a netherite pickaxe.
 
 ## What it does
 
-- A **netherite pickaxe** held in your main hand can break **bedrock**. No other tool can.
-- Broken bedrock **drops as a bedrock block** you can pick up and place again.
+- A **netherite pickaxe** held in your main hand can mine these blocks:
+  - **Bedrock**
+  - **Reinforced deepslate**
+- Only the netherite pickaxe gets these rules. Reinforced deepslate can still be broken slowly
+  with other tools like in vanilla, but then it drops nothing.
+- A block mined with a netherite pickaxe **drops as itself**, so you can pick it up and place it again.
 - This works on **all bedrock**, including the bottom layer of the Overworld (y = −64).
   Careful: breaking that layer opens a hole into the void.
 
+## Data-driven rules
+
+Which blocks get the netherite rules is decided by data files, not by code:
+
+| File | What it does |
+| --- | --- |
+| `data/mineeverything/tags/block/netherite_mineable.json` | The blocks the netherite pickaxe can mine with the rules below. |
+| `data/minecraft/loot_table/blocks/<block>.json` | What each block drops. |
+
+A datapack can add more blocks to the `mineeverything:netherite_mineable` tag.
+Give each new block a loot table too, or it will drop nothing.
+
 ## Mining time
 
-Mining one bedrock block takes **2 minutes** with no upgrades.
+Mining one of these blocks takes **2 minutes** with no upgrades.
 
 | Bonus | Effect on mining time |
 | --- | --- |
@@ -31,20 +47,20 @@ Examples:
 | Efficiency V + Haste I | 25 s |
 | Efficiency V + Haste II | 5 s |
 
-The time is fixed by these rules only. Unlike normal blocks, mining bedrock is **not** slowed down
+The time is fixed by these rules only. Unlike normal blocks, mining these blocks is **not** slowed down
 by Mining Fatigue, being underwater or not standing on the ground.
 
 ## Durability
 
-- Each bedrock block costs the pickaxe **10 durability** instead of the usual 1.
+- Each of these blocks costs the pickaxe **10 durability** instead of the usual 1.
 - **Unbreaking works as normal**: it is rolled separately for each of the 10 points.
   On average a block costs about 5 durability with Unbreaking I, 3.3 with Unbreaking II
   and 2.5 with Unbreaking III.
-- The pickaxe can break while mining bedrock, just like any other tool.
+- The pickaxe can break while mining, just like any other tool.
 
 ## Creative mode
 
-In Creative mode bedrock is broken instantly as usual. It does not drop as an item,
+In Creative mode these blocks are broken instantly as usual. They do not drop as items,
 and the pickaxe takes no damage.
 
 ## Requirements
@@ -60,12 +76,12 @@ and the pickaxe takes no damage.
 
 1. Install the [Fabric Loader](https://fabricmc.net/use/installer/) for Minecraft 26.3.
 2. Download [Fabric API](https://modrinth.com/mod/fabric-api) for 26.3.
-3. Put the Fabric API jar and the Bedrock Miner jar (`bedrock-miner-1.0.0.jar`) in your `mods` folder.
+3. Put the Fabric API jar and the Mine (Almost) Everything jar (`mineeverything-1.0.0.jar`) in your `mods` folder.
    - Windows: `%appdata%\.minecraft\mods`
 4. Start Minecraft with the Fabric profile.
 
 **Multiplayer:** the mod must be installed on **both the server and every player's client**.
-The client and server have to agree on how fast bedrock breaks.
+The client and server have to agree on how fast these blocks break.
 
 ## Building from source
 
@@ -73,7 +89,7 @@ The client and server have to agree on how fast bedrock breaks.
 ./gradlew build
 ```
 
-The mod jar ends up in `build/libs/bedrock-miner-1.0.0.jar`
+The mod jar ends up in `build/libs/mineeverything-1.0.0.jar`
 (the file ending in `-sources.jar` contains only the source code).
 
 To test in a development game, run `./gradlew runClient`.

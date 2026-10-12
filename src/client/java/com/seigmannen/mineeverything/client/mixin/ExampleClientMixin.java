@@ -1,4 +1,4 @@
-package com.seigmannen.bedrockminer.client.mixin;
+package com.seigmannen.mineeverything.client.mixin;
 
 import net.minecraft.client.Minecraft;
 import org.spongepowered.asm.mixin.Mixin;

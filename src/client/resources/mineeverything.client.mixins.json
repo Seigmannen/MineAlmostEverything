@@ -1,9 +1,9 @@
 {
 	"required": true,
-	"package": "com.seigmannen.bedrockminer.mixin",
+	"package": "com.seigmannen.mineeverything.client.mixin",
 	"compatibilityLevel": "JAVA_25",
-	"mixins": [
-		"BedrockDestroyProgressMixin"
+	"client": [
+		"ExampleClientMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

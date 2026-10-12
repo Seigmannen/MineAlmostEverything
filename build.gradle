@@ -15,7 +15,7 @@ loom {
 	splitEnvironmentSourceSets()
 
 	mods {
-		"bedrock-miner" {
+		"mineeverything" {
 			sourceSet sourceSets.main
 			sourceSet sourceSets.client
 		}
