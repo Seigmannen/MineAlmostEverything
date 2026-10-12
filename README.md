@@ -1,31 +1,27 @@
 # Mine (Almost) Everything
 
-A Fabric mod for Minecraft 26.3 that lets you mine normally unbreakable blocks with a netherite pickaxe.
+A Fabric mod for Minecraft 26.3 that lets you mine blocks you normally can't get:
+unbreakable blocks with a netherite pickaxe, and budding amethyst and spawners with Silk Touch.
 
 ## What it does
 
-- A **netherite pickaxe** held in your main hand can mine these blocks:
-  - **Bedrock**
-  - **Reinforced deepslate**
+| Block | Tool needed | What you get |
+| --- | --- | --- |
+| Bedrock | Netherite pickaxe | The block itself |
+| Reinforced deepslate | Netherite pickaxe | The block itself |
+| Budding amethyst | Iron, diamond or netherite pickaxe with **Silk Touch** | The block itself |
+| Spawner | Iron, diamond or netherite pickaxe with **Silk Touch** | The spawner, with its mob type saved in the item |
+
+## Netherite pickaxe: unbreakable blocks
+
+- A **netherite pickaxe** held in your main hand can mine **bedrock** and **reinforced deepslate**.
 - Only the netherite pickaxe gets these rules. Reinforced deepslate can still be broken slowly
   with other tools like in vanilla, but then it drops nothing.
 - A block mined with a netherite pickaxe **drops as itself**, so you can pick it up and place it again.
 - This works on **all bedrock**, including the bottom layer of the Overworld (y = −64).
   Careful: breaking that layer opens a hole into the void.
 
-## Data-driven rules
-
-Which blocks get the netherite rules is decided by data files, not by code:
-
-| File | What it does |
-| --- | --- |
-| `data/mineeverything/tags/block/netherite_mineable.json` | The blocks the netherite pickaxe can mine with the rules below. |
-| `data/minecraft/loot_table/blocks/<block>.json` | What each block drops. |
-
-A datapack can add more blocks to the `mineeverything:netherite_mineable` tag.
-Give each new block a loot table too, or it will drop nothing.
-
-## Mining time
+### Mining time
 
 Mining one of these blocks takes **2 minutes** with no upgrades.
 
@@ -50,7 +46,7 @@ Examples:
 The time is fixed by these rules only. Unlike normal blocks, mining these blocks is **not** slowed down
 by Mining Fatigue, being underwater or not standing on the ground.
 
-## Durability
+### Durability
 
 - Each of these blocks costs the pickaxe **10 durability** instead of the usual 1.
 - **Unbreaking works as normal**: it is rolled separately for each of the 10 points.
@@ -58,10 +54,34 @@ by Mining Fatigue, being underwater or not standing on the ground.
   and 2.5 with Unbreaking III.
 - The pickaxe can break while mining, just like any other tool.
 
+## Silk Touch: budding amethyst and spawners
+
+- **Budding amethyst** and **spawners** need an **iron, diamond or netherite pickaxe**.
+  Wooden, stone, golden and copper pickaxes mine them slowly and get nothing.
+- With **Silk Touch**, the block drops as itself.
+- Without Silk Touch they work like in vanilla: budding amethyst drops nothing,
+  and a spawner drops nothing but gives XP.
+- A spawner mined with Silk Touch **gives no XP**, so you can't get both the XP and the spawner.
+- The dropped spawner item **remembers its mob type**.
+  Note: placing the spawner does not restore the mob type yet. That is coming in a later update.
+
 ## Creative mode
 
-In Creative mode these blocks are broken instantly as usual. They do not drop as items,
+In Creative mode all these blocks are broken instantly as usual. They do not drop as items,
 and the pickaxe takes no damage.
+
+## Data-driven rules
+
+Which blocks get these rules is decided by data files (tags and loot tables), not by code:
+
+| File | What it does |
+| --- | --- |
+| `data/mineeverything/tags/block/netherite_mineable.json` | The blocks the netherite pickaxe can mine with the 2-minute rule. |
+| `data/minecraft/tags/block/needs_iron_tool.json` | Adds budding amethyst and spawner to vanilla's "needs at least an iron tool" list. |
+| `data/minecraft/loot_table/blocks/<block>.json` | What each block drops (bedrock, reinforced deepslate, budding amethyst, spawner). |
+
+A datapack can add more blocks to the `mineeverything:netherite_mineable` tag.
+Give each new block a loot table too, or it will drop nothing.
 
 ## Requirements
 
