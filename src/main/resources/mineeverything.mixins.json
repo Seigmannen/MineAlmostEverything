@@ -4,7 +4,8 @@
 	"compatibilityLevel": "JAVA_25",
 	"mixins": [
 		"BedrockDestroyProgressMixin",
-		"NetheriteMineableLootTableMixin"
+		"NetheriteMineableLootTableMixin",
+		"SpawnerExperienceMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
