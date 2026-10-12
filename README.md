@@ -10,7 +10,7 @@ unbreakable blocks with a netherite pickaxe, and budding amethyst and spawners w
 | Bedrock | Netherite pickaxe | The block itself |
 | Reinforced deepslate | Netherite pickaxe | The block itself |
 | Budding amethyst | Iron, diamond or netherite pickaxe with **Silk Touch** | The block itself |
-| Spawner | Iron, diamond or netherite pickaxe with **Silk Touch** | The spawner, with its mob type saved in the item |
+| Spawner | Iron, diamond or netherite pickaxe with **Silk Touch** | The spawner, which keeps its mob type when placed |
 
 ## Netherite pickaxe: unbreakable blocks
 
@@ -62,8 +62,18 @@ by Mining Fatigue, being underwater or not standing on the ground.
 - Without Silk Touch they work like in vanilla: budding amethyst drops nothing,
   and a spawner drops nothing but gives XP.
 - A spawner mined with Silk Touch **gives no XP**, so you can't get both the XP and the spawner.
-- The dropped spawner item **remembers its mob type**.
-  Note: placing the spawner does not restore the mob type yet. That is coming in a later update.
+- The dropped spawner item **remembers its mob type**, and keeps it when you place it again.
+
+### Placing spawners
+
+- A spawner mined with Silk Touch keeps its mob type when placed, **also for players who are not operators**.
+  (In vanilla, only operators can place spawners with data.)
+- For safety, **only the mob type** is read from the item. All other spawner data
+  (spawn delay, range, mob equipment and so on) is ignored, so the spawner works like a normal one.
+- Only mobs that have a **spawn egg in vanilla** are allowed. Anything else
+  (for example a command block minecart) gives an empty spawner.
+- **Operators** placing a spawner with full block entity data get all the data, like in vanilla.
+- This is handled by the server.
 
 ## Creative mode
 
