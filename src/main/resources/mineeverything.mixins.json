@@ -5,7 +5,8 @@
 	"mixins": [
 		"BedrockDestroyProgressMixin",
 		"NetheriteMineableLootTableMixin",
-		"SpawnerExperienceMixin"
+		"SpawnerExperienceMixin",
+		"SpawnerPlacementMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
