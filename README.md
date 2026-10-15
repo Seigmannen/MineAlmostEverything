@@ -19,6 +19,7 @@ unbreakable blocks with a netherite pickaxe, and budding amethyst and spawners w
   with other tools like in vanilla, but then it drops nothing.
 - A block mined with a netherite pickaxe **drops as itself**, so you can pick it up and place it again.
 - This works on **all bedrock**, including the bottom layer of the Overworld (y = −64).
+  Operators can turn this off with `/mae bottom_layer false` (see [Settings](#settings-per-world)).
   Careful: breaking that layer opens a hole into the void.
 
 ### Mining time
@@ -56,11 +57,10 @@ by Mining Fatigue, being underwater or not standing on the ground.
 
 ## Silk Touch: budding amethyst and spawners
 
-- **Budding amethyst** and **spawners** need an **iron, diamond or netherite pickaxe**.
-  Wooden, stone, golden and copper pickaxes mine them slowly and get nothing.
-- With **Silk Touch**, the block drops as itself.
-- Without Silk Touch they work like in vanilla: budding amethyst drops nothing,
-  and a spawner drops nothing but gives XP.
+- With an **iron, diamond or netherite pickaxe** with **Silk Touch**, the block drops as itself.
+- In every other case they work exactly like in vanilla (same mining speed with every pickaxe):
+  budding amethyst drops nothing, and a spawner drops nothing but gives XP.
+  This includes Silk Touch on a wooden, stone, golden or copper pickaxe.
 - A spawner mined with Silk Touch **gives no XP**, so you can't get both the XP and the spawner.
 - The dropped spawner item **remembers its mob type**, and keeps it when you place it again.
 
@@ -75,6 +75,40 @@ by Mining Fatigue, being underwater or not standing on the ground.
 - **Operators** placing a spawner with full block entity data get all the data, like in vanilla.
 - This is handled by the server.
 
+## Settings (per world)
+
+Operators can turn each part of the mod on or off for a world with the `/mae` command.
+Everything is **on** by default.
+
+| Command | Who | What it does |
+| --- | --- | --- |
+| `/mae` | Everyone | Shows all settings and whether they are on. |
+| `/mae <setting> <true\|false>` | Operators | Turns a setting on or off, e.g. `/mae bottom_layer false`. |
+
+Each setting only affects its own block:
+
+| Setting | When off |
+| --- | --- |
+| `bedrock` | Bedrock can't be mined anywhere, like in vanilla (whatever `bottom_layer` is set to). |
+| `reinforced_deepslate` | Reinforced deepslate works like in vanilla: slow to break and drops nothing. |
+| `budding_amethyst` | Budding amethyst drops nothing, even with Silk Touch. |
+| `spawner` | Spawners drop nothing with Silk Touch, and give XP like in vanilla. |
+| `bottom_layer` | Bedrock on the lowest layer of the **Overworld** (y = −64) can't be mined. Bedrock higher up, and in other dimensions, still can. |
+
+The settings are saved in the world folder (`data/mineeverything/settings.dat`), so each world has its own,
+and they are kept when the game or server restarts.
+
+Good to know:
+
+- Spawner items you already have keep their mob type when placed, even with `spawner` off.
+
+### For other mods
+
+The drops are checked by the loot condition `{"type": "mineeverything:mining_allowed"}` in this mod's loot tables,
+so blocks broken by machines (like a quarry) also follow the settings: a block that is turned off drops nothing.
+A mod that wants to know *before* breaking a block can call
+`com.seigmannen.mineeverything.settings.MiningSettings.isAllowed(level, state, pos)`.
+
 ## Creative mode
 
 In Creative mode all these blocks are broken instantly as usual. They do not drop as items,
@@ -87,8 +121,8 @@ Which blocks get these rules is decided by data files (tags and loot tables), no
 | File | What it does |
 | --- | --- |
 | `data/mineeverything/tags/block/netherite_mineable.json` | The blocks the netherite pickaxe can mine with the 2-minute rule. |
-| `data/minecraft/tags/block/needs_iron_tool.json` | Adds budding amethyst and spawner to vanilla's "needs at least an iron tool" list. |
-| `data/minecraft/loot_table/blocks/<block>.json` | What each block drops (bedrock, reinforced deepslate, budding amethyst, spawner). |
+| `data/mineeverything/tags/item/silk_touch_pickaxes.json` | The pickaxes that, with Silk Touch, make budding amethyst and spawners drop themselves (iron, diamond, netherite). |
+| `data/minecraft/loot_table/blocks/<block>.json` | What each block drops (bedrock, reinforced deepslate, budding amethyst, spawner). Each one uses the `mineeverything:mining_allowed` condition, so it follows the settings. |
 
 A datapack can add more blocks to the `mineeverything:netherite_mineable` tag.
 Give each new block a loot table too, or it will drop nothing.

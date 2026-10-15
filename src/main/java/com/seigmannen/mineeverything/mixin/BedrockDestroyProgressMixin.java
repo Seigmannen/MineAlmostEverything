@@ -20,7 +20,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class BedrockDestroyProgressMixin {
 	@Inject(method = "getDestroyProgress", at = @At("HEAD"), cancellable = true)
 	private void mineEverything$mineWithNetherite(BlockState state, Player player, BlockGetter level, BlockPos pos, CallbackInfoReturnable<Float> cir) {
-		if (NetheriteMining.canMine(state, player)) {
+		if (NetheriteMining.canMine(state, player, pos)) {
 			cir.setReturnValue(NetheriteMining.getProgressPerTick(player));
 		}
 	}

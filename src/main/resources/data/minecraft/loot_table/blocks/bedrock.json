@@ -3,10 +3,18 @@
   "pools": [
     {
       "condition": {
-        "type": "minecraft:match_tool",
-        "predicate": {
-          "items": "minecraft:netherite_pickaxe"
-        }
+        "type": "minecraft:all_of",
+        "terms": [
+          {
+            "type": "minecraft:match_tool",
+            "predicate": {
+              "items": "minecraft:netherite_pickaxe"
+            }
+          },
+          {
+            "type": "mineeverything:mining_allowed"
+          }
+        ]
       },
       "entries": [
         {

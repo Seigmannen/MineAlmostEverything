@@ -1,5 +1,7 @@
 package com.seigmannen.mineeverything;
 
+import com.seigmannen.mineeverything.settings.MiningSettings;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.TagKey;
@@ -32,9 +34,10 @@ public final class NetheriteMining {
 	private NetheriteMining() {
 	}
 
-	/** True when this player is allowed to mine this block with our rules. */
-	public static boolean canMine(BlockState state, Player player) {
-		return state.is(NETHERITE_MINEABLE) && player.getMainHandItem().is(Items.NETHERITE_PICKAXE);
+	/** True when this player is allowed to mine this block with our rules (also checks the world's settings). */
+	public static boolean canMine(BlockState state, Player player, BlockPos pos) {
+		return state.is(NETHERITE_MINEABLE) && player.getMainHandItem().is(Items.NETHERITE_PICKAXE)
+				&& MiningSettings.isAllowed(player.level(), state, pos);
 	}
 
 	/** How many seconds it takes to mine one block with the player's current pickaxe and effects. */

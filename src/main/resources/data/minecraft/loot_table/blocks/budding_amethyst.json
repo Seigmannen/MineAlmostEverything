@@ -2,7 +2,21 @@
   "type": "minecraft:block",
   "pools": [
     {
-      "condition": "minecraft:tool/can_silk_touch",
+      "condition": {
+        "type": "minecraft:all_of",
+        "terms": [
+          "minecraft:tool/can_silk_touch",
+          {
+            "type": "minecraft:match_tool",
+            "predicate": {
+              "items": "#mineeverything:silk_touch_pickaxes"
+            }
+          },
+          {
+            "type": "mineeverything:mining_allowed"
+          }
+        ]
+      },
       "entries": [
         {
           "type": "minecraft:item",
