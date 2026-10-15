@@ -13,6 +13,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -36,8 +37,13 @@ public final class NetheriteMining {
 
 	/** True when this player is allowed to mine this block with our rules (also checks the world's settings). */
 	public static boolean canMine(BlockState state, Player player, BlockPos pos) {
-		return state.is(NETHERITE_MINEABLE) && player.getMainHandItem().is(Items.NETHERITE_PICKAXE)
-				&& MiningSettings.isAllowed(player.level(), state, pos);
+		return canMine(player.level(), state, pos, player.getMainHandItem());
+	}
+
+	/** True when this tool may mine this block with our rules (also checks the world's settings). */
+	public static boolean canMine(Level level, BlockState state, BlockPos pos, ItemStack tool) {
+		return state.is(NETHERITE_MINEABLE) && tool.is(Items.NETHERITE_PICKAXE)
+				&& MiningSettings.isAllowed(level, state, pos);
 	}
 
 	/** How many seconds it takes to mine one block with the player's current pickaxe and effects. */

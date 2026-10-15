@@ -1,8 +1,10 @@
 package com.seigmannen.mineeverything.api;
 
+import com.seigmannen.mineeverything.NetheriteMining;
 import com.seigmannen.mineeverything.settings.MiningSetting;
 import com.seigmannen.mineeverything.settings.MiningSettings;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -32,5 +34,14 @@ public final class MineEverythingApi {
 	 */
 	public static boolean isAllowed(Level level, BlockState state, BlockPos pos) {
 		return MiningSettings.isAllowed(level, state, pos);
+	}
+
+	/**
+	 * Whether this tool can mine this block with this mod's rules for blocks that are unbreakable in vanilla
+	 * (like bedrock). True when the block is in the mineeverything:netherite_mineable tag, the tool is a
+	 * netherite pickaxe, and the settings allow it (including "bottom_layer"). Uses the same rules as a player.
+	 */
+	public static boolean canMineUnbreakable(Level level, BlockState state, BlockPos pos, ItemStack tool) {
+		return NetheriteMining.canMine(level, state, pos, tool);
 	}
 }

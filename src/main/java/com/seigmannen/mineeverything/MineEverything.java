@@ -16,7 +16,6 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,8 +34,7 @@ public class MineEverything implements ModInitializer {
 			// Vanilla already takes 1 durability for mining a block, so we take the rest.
 			// hurtAndBreak rolls Unbreaking for every point and does nothing in creative.
 			ItemStack pickaxe = player.getMainHandItem();
-			if (state.is(NetheriteMining.NETHERITE_MINEABLE) && pickaxe.is(Items.NETHERITE_PICKAXE)
-					&& MiningSettings.isAllowed(level, state, pos)) {
+			if (NetheriteMining.canMine(level, state, pos, pickaxe)) {
 				pickaxe.hurtAndBreak(NetheriteMining.DURABILITY_PER_BLOCK - 1, player, EquipmentSlot.MAINHAND);
 			}
 		});
