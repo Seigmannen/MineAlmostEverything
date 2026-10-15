@@ -106,8 +106,26 @@ Good to know:
 
 The drops are checked by the loot condition `{"type": "mineeverything:mining_allowed"}` in this mod's loot tables,
 so blocks broken by machines (like a quarry) also follow the settings: a block that is turned off drops nothing.
-A mod that wants to know *before* breaking a block can call
-`com.seigmannen.mineeverything.settings.MiningSettings.isAllowed(level, state, pos)`.
+A mod that wants to know *before* breaking a block, or wants to read the settings, can use the public API in
+`com.seigmannen.mineeverything.api.MineEverythingApi`:
+
+| Method | Returns |
+| --- | --- |
+| `MineEverythingApi.isEnabled(Level level, String setting)` | `true` if that `/mae` setting is on in this world. `setting` is one of `"bedrock"`, `"reinforced_deepslate"`, `"budding_amethyst"`, `"spawner"`, `"bottom_layer"`. An unknown name gives `false`. |
+| `MineEverythingApi.isAllowed(Level level, BlockState state, BlockPos pos)` | `true` if the settings allow this mod's rules for that block at that position (also checks `bottom_layer` for bedrock at y = −64 in the Overworld). Blocks without a setting give `true`. |
+
+Both work on the server and on the client (the client has a copy of the settings, sent by the server).
+Only call them when this mod is loaded, so your mod still works without it:
+
+```java
+if (FabricLoader.getInstance().isModLoaded("mineeverything")) {
+	boolean bottomLayer = MineEverythingApi.isEnabled(level, "bottom_layer");
+}
+```
+
+To compile against the API without making this mod required, add its jar as `compileOnly` in your `build.gradle`,
+and list it under `suggests` (not `depends`) in your `fabric.mod.json`. Keep the API calls in a class that is only
+loaded after the `isModLoaded` check, or Java may fail to find `MineEverythingApi` when the mod is missing.
 
 ## Creative mode
 
