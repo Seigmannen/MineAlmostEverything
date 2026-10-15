@@ -140,7 +140,7 @@ Give each new block a loot table too, or it will drop nothing.
 
 1. Install the [Fabric Loader](https://fabricmc.net/use/installer/) for Minecraft 26.3.
 2. Download [Fabric API](https://modrinth.com/mod/fabric-api) for 26.3.
-3. Put the Fabric API jar and the Mine (Almost) Everything jar (`mineeverything-1.0.0.jar`) in your `mods` folder.
+3. Put the Fabric API jar and the Mine (Almost) Everything jar (`mineeverything-1.1.0.jar`) in your `mods` folder.
    - Windows: `%appdata%\.minecraft\mods`
 4. Start Minecraft with the Fabric profile.
 
@@ -153,7 +153,7 @@ The client and server have to agree on how fast these blocks break.
 ./gradlew build
 ```
 
-The mod jar ends up in `build/libs/mineeverything-1.0.0.jar`
+The mod jar ends up in `build/libs/mineeverything-1.1.0.jar`
 (the file ending in `-sources.jar` contains only the source code).
 
 To test in a development game, run `./gradlew runClient`.

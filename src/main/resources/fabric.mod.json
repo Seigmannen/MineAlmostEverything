@@ -3,13 +3,14 @@
 	"id": "mineeverything",
 	"version": "${version}",
 	"name": "Mine (Almost) Everything",
-	"description": "Lets a netherite pickaxe mine blocks that are normally unbreakable, like bedrock (including the bottom layer of the Overworld) and reinforced deepslate. Takes 2 minutes, sped up by Efficiency and Haste, and the block drops as itself.",
+	"description": "Lets a netherite pickaxe mine blocks that are normally unbreakable, like bedrock and reinforced deepslate, and lets Silk Touch on an iron pickaxe or better mine budding amethyst and spawners. Each part can be turned on or off per world with /mae.",
 	"authors": [
-		"seigmannen"
+		"Seigmannen"
 	],
 	"contact": {
-		"homepage": "https://github.com/Seigmannen/bedrock-miner",
-		"sources": "https://github.com/Seigmannen/bedrock-miner"
+		"homepage": "https://github.com/Seigmannen/MineAlmostEverything",
+		"sources": "https://github.com/Seigmannen/MineAlmostEverything",
+		"issues": "https://github.com/Seigmannen/MineAlmostEverything/issues"
 	},
 	"license": "MIT",
 	"icon": "assets/mineeverything/icon.png",
@@ -23,16 +24,12 @@
 		]
 	},
 	"mixins": [
-		"mineeverything.mixins.json",
-		{
-			"config": "mineeverything.client.mixins.json",
-			"environment": "client"
-		}
+		"mineeverything.mixins.json"
 	],
 	"depends": {
 		"fabricloader": ">=0.19.5",
 		"minecraft": "~26.3",
 		"java": ">=25",
-		"fabric-api": "*"
+		"fabric-api": ">=0.162.0"
 	}
 }
