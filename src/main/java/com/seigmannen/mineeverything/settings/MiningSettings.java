@@ -21,6 +21,9 @@ import java.util.Set;
  * on how fast a block breaks.
  */
 public final class MiningSettings {
+	/** The top layer of the Nether roof. */
+	private static final int NETHER_ROOF_Y = 127;
+
 	/** The copy the client got from the server, or null (everything on) until the server sends one. */
 	private static volatile Set<MiningSetting> clientEnabled = null;
 
@@ -103,8 +106,11 @@ public final class MiningSettings {
 	 */
 	public static boolean isAllowed(Level level, BlockState state, BlockPos pos) {
 		if (state.is(Blocks.BEDROCK)) {
-			return isEnabled(level, MiningSetting.BEDROCK)
-					&& (!isOverworldBottomLayer(level, pos) || isEnabled(level, MiningSetting.BOTTOM_LAYER));
+			if (!isEnabled(level, MiningSetting.BEDROCK)) {
+				return false;
+			}
+			MiningSetting layer = getBedrockLayer(level, pos);
+			return layer == null || isEnabled(level, layer);
 		}
 		if (state.is(Blocks.REINFORCED_DEEPSLATE)) {
 			return isEnabled(level, MiningSetting.REINFORCED_DEEPSLATE);
@@ -118,8 +124,22 @@ public final class MiningSettings {
 		return true;
 	}
 
-	/** The lowest layer of the Overworld (y = -64). */
-	private static boolean isOverworldBottomLayer(Level level, BlockPos pos) {
-		return level.dimension() == Level.OVERWORLD && pos.getY() == level.getMinY();
+	/**
+	 * The setting for the bedrock layer at this position: the lowest layer of the Overworld (y = -64),
+	 * or the lowest (y = 0) or top roof layer (y = 127) of the Nether. Null anywhere else.
+	 */
+	private static MiningSetting getBedrockLayer(Level level, BlockPos pos) {
+		if (level.dimension() == Level.OVERWORLD) {
+			return pos.getY() == level.getMinY() ? MiningSetting.OVERWORLD_BOTTOM : null;
+		}
+		if (level.dimension() == Level.NETHER) {
+			if (pos.getY() == level.getMinY()) {
+				return MiningSetting.NETHER_BOTTOM;
+			}
+			if (pos.getY() == NETHER_ROOF_Y) {
+				return MiningSetting.NETHER_ROOF;
+			}
+		}
+		return null;
 	}
 }

@@ -10,7 +10,11 @@ public enum MiningSetting {
 	BUDDING_AMETHYST("budding_amethyst"),
 	SPAWNER("spawner"),
 	/** Bedrock on the lowest layer of the Overworld (y = -64). Only matters while BEDROCK is on. */
-	BOTTOM_LAYER("bottom_layer");
+	OVERWORLD_BOTTOM("overworld_bottom"),
+	/** Bedrock on the lowest layer of the Nether (y = 0). Only matters while BEDROCK is on. */
+	NETHER_BOTTOM("nether_bottom"),
+	/** Bedrock on the top layer of the Nether roof (y = 127). Only matters while BEDROCK is on. */
+	NETHER_ROOF("nether_roof");
 
 	private final String name;
 

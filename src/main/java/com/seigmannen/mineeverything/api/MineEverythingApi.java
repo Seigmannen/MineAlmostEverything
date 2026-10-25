@@ -19,7 +19,8 @@ public final class MineEverythingApi {
 
 	/**
 	 * Whether a /mae setting is on in this world. The setting names are the same as in /mae:
-	 * "bedrock", "reinforced_deepslate", "budding_amethyst", "spawner" and "bottom_layer".
+	 * "bedrock", "reinforced_deepslate", "budding_amethyst", "spawner",
+	 * "overworld_bottom", "nether_bottom" and "nether_roof".
 	 * An unknown name returns false.
 	 */
 	public static boolean isEnabled(Level level, String setting) {
@@ -29,7 +30,8 @@ public final class MineEverythingApi {
 
 	/**
 	 * Whether the settings allow this mod's rules for this block at this position. Checks the block's own
-	 * setting, and for bedrock also "bottom_layer" when it is on the lowest layer of the Overworld.
+	 * setting, and for bedrock also "overworld_bottom" (y = -64 in the Overworld), "nether_bottom"
+	 * (y = 0 in the Nether) or "nether_roof" (y = 127 in the Nether) when it is on one of those layers.
 	 * Blocks without a setting return true.
 	 */
 	public static boolean isAllowed(Level level, BlockState state, BlockPos pos) {
@@ -39,7 +41,7 @@ public final class MineEverythingApi {
 	/**
 	 * Whether this tool can mine this block with this mod's rules for blocks that are unbreakable in vanilla
 	 * (like bedrock). True when the block is in the mineeverything:netherite_mineable tag, the tool is a
-	 * netherite pickaxe, and the settings allow it (including "bottom_layer"). Uses the same rules as a player.
+	 * netherite pickaxe, and the settings allow it (including the bedrock layer settings). Uses the same rules as a player.
 	 */
 	public static boolean canMineUnbreakable(Level level, BlockState state, BlockPos pos, ItemStack tool) {
 		return NetheriteMining.canMine(level, state, pos, tool);
