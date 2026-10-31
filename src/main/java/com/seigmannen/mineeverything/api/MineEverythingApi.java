@@ -1,5 +1,6 @@
 package com.seigmannen.mineeverything.api;
 
+import com.seigmannen.mineeverything.HarvestRules;
 import com.seigmannen.mineeverything.NetheriteMining;
 import com.seigmannen.mineeverything.settings.MiningSetting;
 import com.seigmannen.mineeverything.settings.MiningSettings;
@@ -45,5 +46,15 @@ public final class MineEverythingApi {
 	 */
 	public static boolean canMineUnbreakable(Level level, BlockState state, BlockPos pos, ItemStack tool) {
 		return NetheriteMining.canMine(level, state, pos, tool);
+	}
+
+	/**
+	 * Whether this mod's rules make this tool the correct tool for drops from this block, without needing a player
+	 * (for example a pickaxe with Silk Touch on a cobweb). Covers all of this mod's "correct tool" rules, and follows
+	 * their /mae settings: a rule whose setting is off gives false. Vanilla's own rules are not included, so check
+	 * those yourself too (for example with {@code tool.isCorrectForDrops(state)}). Uses the same rules as a player.
+	 */
+	public static boolean canHarvestWith(Level level, BlockState state, BlockPos pos, ItemStack tool) {
+		return HarvestRules.canHarvest(level, state, pos, tool);
 	}
 }

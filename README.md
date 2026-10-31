@@ -141,6 +141,7 @@ A mod that wants to know *before* breaking a block, or wants to read the setting
 | `MineEverythingApi.isEnabled(Level level, String setting)` | `true` if that `/mae` setting is on in this world. `setting` is one of `"bedrock"`, `"reinforced_deepslate"`, `"budding_amethyst"`, `"spawner"`, `"overworld_bottom"`, `"nether_bottom"`, `"nether_roof"`, `"end_portal_frame"`, `"cobweb"`. An unknown name gives `false`. |
 | `MineEverythingApi.isAllowed(Level level, BlockState state, BlockPos pos)` | `true` if the settings allow this mod's rules for that block at that position (for bedrock it also checks `overworld_bottom` at y = −64 in the Overworld, and `nether_bottom` at y = 0 and `nether_roof` at y = 127 in the Nether). Blocks without a setting give `true`. |
 | `MineEverythingApi.canMineUnbreakable(Level level, BlockState state, BlockPos pos, ItemStack tool)` | `true` if `tool` can mine that block by this mod's rules for blocks that are unbreakable in vanilla: the block is in the `mineeverything:netherite_mineable` tag, `tool` is a netherite pickaxe, and the settings allow it (including the bedrock layer settings). These are the same rules a player is held to. |
+| `MineEverythingApi.canHarvestWith(Level level, BlockState state, BlockPos pos, ItemStack tool)` | `true` if this mod's rules make `tool` the correct tool for drops from that block, with no player needed (for example any pickaxe with Silk Touch on a cobweb). Covers all of this mod's "correct tool" rules, so new rules are included automatically, and follows their settings (a rule that is turned off gives `false`). Vanilla's own rules are not included, so a quarry should check both: `tool.isCorrectForDrops(state) \|\| MineEverythingApi.canHarvestWith(level, state, pos, tool)`. These are the same rules a player is held to. |
 
 All of them work on the server and on the client (the client has a copy of the settings, sent by the server).
 Only call them when this mod is loaded, so your mod still works without it:
@@ -156,6 +157,7 @@ if (FabricLoader.getInstance().isModLoaded("mineeverything")) {
 (unknown name). The method signatures are unchanged.
 Version 1.3.0 added the settings `end_portal_frame` and `cobweb`, and put end portal frames in the
 `mineeverything:netherite_mineable` tag, so `canMineUnbreakable` covers them too.
+Version 1.4.0 added `canHarvestWith`.
 
 To compile against the API without making this mod required, add its jar as `compileOnly` in your `build.gradle`,
 and list it under `suggests` (not `depends`) in your `fabric.mod.json`. Keep the API calls in a class that is only
@@ -195,7 +197,7 @@ Give each new block a loot table too, or it will drop nothing.
 
 1. Install the [Fabric Loader](https://fabricmc.net/use/installer/) for Minecraft 26.3.
 2. Download [Fabric API](https://modrinth.com/mod/fabric-api) for 26.3.
-3. Put the Fabric API jar and the Mine (Almost) Everything jar (`mineeverything-1.3.0.jar`) in your `mods` folder.
+3. Put the Fabric API jar and the Mine (Almost) Everything jar (`mineeverything-1.4.0.jar`) in your `mods` folder.
    - Windows: `%appdata%\.minecraft\mods`
 4. Start Minecraft with the Fabric profile.
 
@@ -208,7 +210,7 @@ The client and server have to agree on how fast these blocks break.
 ./gradlew build
 ```
 
-The mod jar ends up in `build/libs/mineeverything-1.3.0.jar`
+The mod jar ends up in `build/libs/mineeverything-1.4.0.jar`
 (the file ending in `-sources.jar` contains only the source code).
 
 To test in a development game, run `./gradlew runClient`.
