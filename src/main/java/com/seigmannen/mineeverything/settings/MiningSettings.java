@@ -121,6 +121,12 @@ public final class MiningSettings {
 		if (state.is(Blocks.SPAWNER)) {
 			return isEnabled(level, MiningSetting.SPAWNER);
 		}
+		if (state.is(Blocks.END_PORTAL_FRAME)) {
+			return isEnabled(level, MiningSetting.END_PORTAL_FRAME);
+		}
+		if (state.is(Blocks.COBWEB)) {
+			return isEnabled(level, MiningSetting.COBWEB);
+		}
 		return true;
 	}
 

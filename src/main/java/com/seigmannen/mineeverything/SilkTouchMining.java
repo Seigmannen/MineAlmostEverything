@@ -24,7 +24,11 @@ public final class SilkTouchMining {
 
 	/** True when this tool makes budding amethyst or a spawner drop itself (the setting is checked separately). */
 	public static boolean isSilkTouchPickaxe(Level level, ItemStack tool) {
+		return tool.is(SILK_TOUCH_PICKAXES) && hasSilkTouch(level, tool);
+	}
+
+	public static boolean hasSilkTouch(Level level, ItemStack tool) {
 		Holder<Enchantment> silkTouch = level.registryAccess().getOrThrow(Enchantments.SILK_TOUCH);
-		return tool.is(SILK_TOUCH_PICKAXES) && EnchantmentHelper.getItemEnchantmentLevel(silkTouch, tool) > 0;
+		return EnchantmentHelper.getItemEnchantmentLevel(silkTouch, tool) > 0;
 	}
 }

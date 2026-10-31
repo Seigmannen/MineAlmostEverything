@@ -1,7 +1,8 @@
 # Mine (Almost) Everything
 
 A Fabric mod for Minecraft 26.3 that lets you mine blocks you normally can't get:
-unbreakable blocks with a netherite pickaxe, and budding amethyst and spawners with Silk Touch.
+unbreakable blocks with a netherite pickaxe, budding amethyst and spawners with Silk Touch,
+and cobwebs with a Silk Touch pickaxe.
 
 ## What it does
 
@@ -9,12 +10,15 @@ unbreakable blocks with a netherite pickaxe, and budding amethyst and spawners w
 | --- | --- | --- |
 | Bedrock | Netherite pickaxe | The block itself |
 | Reinforced deepslate | Netherite pickaxe | The block itself |
+| End portal frame | Netherite pickaxe | The frame, without an Eye of Ender |
 | Budding amethyst | Iron, diamond or netherite pickaxe with **Silk Touch** | The block itself |
 | Spawner | Iron, diamond or netherite pickaxe with **Silk Touch** | The spawner, which keeps its mob type when placed |
+| Cobweb | Any pickaxe with **Silk Touch** | The block itself |
 
 ## Netherite pickaxe: unbreakable blocks
 
-- A **netherite pickaxe** held in your main hand can mine **bedrock** and **reinforced deepslate**.
+- A **netherite pickaxe** held in your main hand can mine **bedrock**, **reinforced deepslate**
+  and **end portal frames**.
 - Only the netherite pickaxe gets these rules. Reinforced deepslate can still be broken slowly
   with other tools like in vanilla, but then it drops nothing.
 - A block mined with a netherite pickaxe **drops as itself**, so you can pick it up and place it again.
@@ -24,27 +28,34 @@ unbreakable blocks with a netherite pickaxe, and budding amethyst and spawners w
   and `/mae nether_roof false` (see [Settings](#settings-per-world)).
   Careful: breaking a bottom layer opens a hole into the void.
 
+### End portal frames
+
+- A mined end portal frame always drops **an empty frame**. If it had an Eye of Ender in it, **the eye is lost**.
+- If the frame was part of an **active portal**, the portal disappears when the frame is broken.
+  This also happens when the frame is removed in another way, for example by a quarry or with `/setblock`.
+  To get the portal back, place the frame again and put an eye in it.
+
 ### Mining time
 
 Mining one of these blocks takes **2 minutes** with no upgrades.
 
-| Bonus | Effect on mining time |
-| --- | --- |
-| Efficiency enchantment | −15 seconds per level |
-| Haste effect | −20 seconds per level |
-| Minimum time | never less than 5 seconds |
+| Bonus                  | Effect on mining time     |
+| ---------------------- | ------------------------- |
+| Efficiency enchantment | −15 seconds per level     |
+| Haste effect           | −20 seconds per level     |
+| Minimum time           | never less than 5 seconds |
 
 Formula: `time = 120 − 15 × Efficiency level − 20 × Haste level` seconds, but at least 5 seconds.
 
 Examples:
 
-| Pickaxe and effects | Time |
-| --- | --- |
-| No enchantments, no Haste | 120 s |
-| Efficiency V | 45 s |
-| Haste II (e.g. from a beacon) | 80 s |
-| Efficiency V + Haste I | 25 s |
-| Efficiency V + Haste II | 5 s |
+| Pickaxe and effects           | Time  |
+| ----------------------------- | ----- |
+| No enchantments, no Haste     | 120 s |
+| Efficiency V                  | 45 s  |
+| Haste II (e.g. from a beacon) | 80 s  |
+| Efficiency V + Haste I        | 25 s  |
+| Efficiency V + Haste II       | 5 s   |
 
 The time is fixed by these rules only. Unlike normal blocks, mining these blocks is **not** slowed down
 by Mining Fatigue, being underwater or not standing on the ground.
@@ -77,6 +88,14 @@ by Mining Fatigue, being underwater or not standing on the ground.
 - **Operators** placing a spawner with full block entity data get all the data, like in vanilla.
 - This is handled by the server.
 
+## Silk Touch pickaxe: cobwebs
+
+- **Any pickaxe** with **Silk Touch** makes a cobweb drop itself. This uses the `minecraft:pickaxes` tag,
+  so it also works with pickaxes from other mods that are in that tag.
+- Cobwebs break **as fast as in vanilla**; Silk Touch only changes what they drop.
+- Everything else is like vanilla: shears and Silk Touch swords still give the cobweb, swords without
+  Silk Touch give string, and a pickaxe without Silk Touch gives nothing.
+
 ## Settings (per world)
 
 Operators can turn each part of the mod on or off for a world with the `/mae` command.
@@ -95,6 +114,8 @@ Each setting only affects its own block:
 | `reinforced_deepslate` | Reinforced deepslate works like in vanilla: slow to break and drops nothing. |
 | `budding_amethyst` | Budding amethyst drops nothing, even with Silk Touch. |
 | `spawner` | Spawners drop nothing with Silk Touch, and give XP like in vanilla. |
+| `end_portal_frame` | End portal frames can't be mined, like in vanilla. Removing a frame in another way (like `/setblock`) leaves the portal. |
+| `cobweb` | A Silk Touch pickaxe gets nothing from cobwebs, like in vanilla. |
 | `overworld_bottom` | Bedrock on the lowest layer of the **Overworld** (y = −64) can't be mined. Other bedrock in the Overworld still can. |
 | `nether_bottom` | Bedrock on the lowest layer of the **Nether** (y = 0) can't be mined. Other bedrock in the Nether still can. |
 | `nether_roof` | Bedrock on the top layer of the **Nether** roof (y = 127) can't be mined. Other bedrock in the Nether still can. |
@@ -117,7 +138,7 @@ A mod that wants to know *before* breaking a block, or wants to read the setting
 
 | Method | Returns |
 | --- | --- |
-| `MineEverythingApi.isEnabled(Level level, String setting)` | `true` if that `/mae` setting is on in this world. `setting` is one of `"bedrock"`, `"reinforced_deepslate"`, `"budding_amethyst"`, `"spawner"`, `"overworld_bottom"`, `"nether_bottom"`, `"nether_roof"`. An unknown name gives `false`. |
+| `MineEverythingApi.isEnabled(Level level, String setting)` | `true` if that `/mae` setting is on in this world. `setting` is one of `"bedrock"`, `"reinforced_deepslate"`, `"budding_amethyst"`, `"spawner"`, `"overworld_bottom"`, `"nether_bottom"`, `"nether_roof"`, `"end_portal_frame"`, `"cobweb"`. An unknown name gives `false`. |
 | `MineEverythingApi.isAllowed(Level level, BlockState state, BlockPos pos)` | `true` if the settings allow this mod's rules for that block at that position (for bedrock it also checks `overworld_bottom` at y = −64 in the Overworld, and `nether_bottom` at y = 0 and `nether_roof` at y = 127 in the Nether). Blocks without a setting give `true`. |
 | `MineEverythingApi.canMineUnbreakable(Level level, BlockState state, BlockPos pos, ItemStack tool)` | `true` if `tool` can mine that block by this mod's rules for blocks that are unbreakable in vanilla: the block is in the `mineeverything:netherite_mineable` tag, `tool` is a netherite pickaxe, and the settings allow it (including the bedrock layer settings). These are the same rules a player is held to. |
 
@@ -133,6 +154,8 @@ if (FabricLoader.getInstance().isModLoaded("mineeverything")) {
 `canMineUnbreakable` was added in version 1.1.1. In version 1.2.0 the setting `bottom_layer` was replaced by
 `overworld_bottom`, `nether_bottom` and `nether_roof`, so `isEnabled(level, "bottom_layer")` now gives `false`
 (unknown name). The method signatures are unchanged.
+Version 1.3.0 added the settings `end_portal_frame` and `cobweb`, and put end portal frames in the
+`mineeverything:netherite_mineable` tag, so `canMineUnbreakable` covers them too.
 
 To compile against the API without making this mod required, add its jar as `compileOnly` in your `build.gradle`,
 and list it under `suggests` (not `depends`) in your `fabric.mod.json`. Keep the API calls in a class that is only
@@ -149,9 +172,12 @@ Which blocks get these rules is decided by data files (tags and loot tables), no
 
 | File | What it does |
 | --- | --- |
-| `data/mineeverything/tags/block/netherite_mineable.json` | The blocks the netherite pickaxe can mine with the 2-minute rule. |
+| `data/mineeverything/tags/block/netherite_mineable.json` | The blocks the netherite pickaxe can mine with the 2-minute rule (bedrock, reinforced deepslate, end portal frame). |
 | `data/mineeverything/tags/item/silk_touch_pickaxes.json` | The pickaxes that, with Silk Touch, make budding amethyst and spawners drop themselves (iron, diamond, netherite). |
-| `data/minecraft/loot_table/blocks/<block>.json` | What each block drops (bedrock, reinforced deepslate, budding amethyst, spawner). Each one uses the `mineeverything:mining_allowed` condition, so it follows the settings. |
+| `data/minecraft/loot_table/blocks/<block>.json` | What each block drops (bedrock, reinforced deepslate, end portal frame, budding amethyst, spawner). Each one uses the `mineeverything:mining_allowed` condition, so it follows the settings. |
+
+Cobwebs use vanilla's own loot table, which already drops the cobweb with Silk Touch. Vanilla just doesn't
+give a pickaxe any drops from cobwebs, and that is the only thing this mod changes for them.
 
 A datapack can add more blocks to the `mineeverything:netherite_mineable` tag.
 Give each new block a loot table too, or it will drop nothing.
@@ -169,7 +195,7 @@ Give each new block a loot table too, or it will drop nothing.
 
 1. Install the [Fabric Loader](https://fabricmc.net/use/installer/) for Minecraft 26.3.
 2. Download [Fabric API](https://modrinth.com/mod/fabric-api) for 26.3.
-3. Put the Fabric API jar and the Mine (Almost) Everything jar (`mineeverything-1.2.0.jar`) in your `mods` folder.
+3. Put the Fabric API jar and the Mine (Almost) Everything jar (`mineeverything-1.3.0.jar`) in your `mods` folder.
    - Windows: `%appdata%\.minecraft\mods`
 4. Start Minecraft with the Fabric profile.
 
@@ -182,7 +208,7 @@ The client and server have to agree on how fast these blocks break.
 ./gradlew build
 ```
 
-The mod jar ends up in `build/libs/mineeverything-1.2.0.jar`
+The mod jar ends up in `build/libs/mineeverything-1.3.0.jar`
 (the file ending in `-sources.jar` contains only the source code).
 
 To test in a development game, run `./gradlew runClient`.

@@ -14,7 +14,9 @@ public enum MiningSetting {
 	/** Bedrock on the lowest layer of the Nether (y = 0). Only matters while BEDROCK is on. */
 	NETHER_BOTTOM("nether_bottom"),
 	/** Bedrock on the top layer of the Nether roof (y = 127). Only matters while BEDROCK is on. */
-	NETHER_ROOF("nether_roof");
+	NETHER_ROOF("nether_roof"),
+	END_PORTAL_FRAME("end_portal_frame"),
+	COBWEB("cobweb");
 
 	private final String name;
 

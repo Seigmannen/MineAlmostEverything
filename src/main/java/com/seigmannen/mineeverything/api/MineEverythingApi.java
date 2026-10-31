@@ -20,7 +20,7 @@ public final class MineEverythingApi {
 	/**
 	 * Whether a /mae setting is on in this world. The setting names are the same as in /mae:
 	 * "bedrock", "reinforced_deepslate", "budding_amethyst", "spawner",
-	 * "overworld_bottom", "nether_bottom" and "nether_roof".
+	 * "overworld_bottom", "nether_bottom", "nether_roof", "end_portal_frame" and "cobweb".
 	 * An unknown name returns false.
 	 */
 	public static boolean isEnabled(Level level, String setting) {

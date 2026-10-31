@@ -1,6 +1,7 @@
 {
   "values": [
     "minecraft:bedrock",
-    "minecraft:reinforced_deepslate"
+    "minecraft:reinforced_deepslate",
+    "minecraft:end_portal_frame"
   ]
 }

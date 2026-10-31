@@ -3,7 +3,7 @@
 	"id": "mineeverything",
 	"version": "${version}",
 	"name": "Mine (Almost) Everything",
-	"description": "Lets a netherite pickaxe mine blocks that are normally unbreakable, like bedrock and reinforced deepslate, and lets Silk Touch on an iron pickaxe or better mine budding amethyst and spawners. Each part can be turned on or off per world with /mae.",
+	"description": "Lets a netherite pickaxe mine blocks that are normally unbreakable, like bedrock, reinforced deepslate and end portal frames, lets Silk Touch on an iron pickaxe or better mine budding amethyst and spawners, and lets Silk Touch on any pickaxe pick up cobwebs. Each part can be turned on or off per world with /mae.",
 	"authors": [
 		"Seigmannen"
 	],
